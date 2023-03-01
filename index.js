@@ -2,7 +2,7 @@ let op = 0;
 let op_znak;
 function cos(znak) {
     let zaw = document.getElementById("ekran");
-    if((zaw.innerHTML).length < 24 || znak == '⇐' || znak == 'C' || znak == 'CE') {
+    //if((zaw.innerHTML).length < 24 || znak == '⇐' || znak == 'C' || znak == 'CE') {
     if(znak == '⇐') {
         let wart = zaw.innerHTML;
         zaw.innerHTML = wart.slice(0, -1);
@@ -20,26 +20,29 @@ function cos(znak) {
             op_znak = znak;
             zaw.innerHTML = zaw.innerHTML + znak;
         } else {
-            let przed = parseFloat(wart.substr(0,wart.lastIndexOf(op_znak)));
-            let po = parseFloat(wart.substr(wart.lastIndexOf(op_znak)+1,wart.length));
-            let wyn;
-            switch(op_znak) {
-                case '+':
-                    wyn = przed + po;
-                    zaw.innerHTML = wyn + znak;
-                    break;
-                case '-':
-                    wyn = przed - po;
-                    zaw.innerHTML = wyn + znak;
-                    break;
-                case '*':
-                    wyn = przed * po;
-                    zaw.innerHTML = wyn + znak;
-                    break;
-                case '/':
-                    wyn = przed / po;
-                    zaw.innerHTML = wyn + znak;
-                    break;
+            let gowno = (zaw.innerHTML).charAt((zaw.innerHTML).length - 1);
+            if(gowno != '*' && gowno != '/' && gowno != '+' && gowno != '-') {
+                let przed = parseFloat(wart.substr(0,wart.lastIndexOf(op_znak)));
+                let po = parseFloat(wart.substr(wart.lastIndexOf(op_znak)+1,wart.length));
+                let wyn;
+                switch(op_znak) {
+                    case '+':
+                        wyn = przed + po;
+                        zaw.innerHTML = wyn + znak;
+                        break;
+                    case '-':
+                        wyn = przed - po;
+                        zaw.innerHTML = wyn + znak;
+                        break;
+                    case '*':
+                        wyn = przed * po;
+                        zaw.innerHTML = wyn + znak;
+                        break;
+                    case '/':
+                        wyn = przed / po;
+                        zaw.innerHTML = wyn + znak;
+                        break;
+                }
             }
         }
     } else if(znak == '=') {
@@ -47,28 +50,31 @@ function cos(znak) {
         let przed = parseFloat(wart.substr(0,wart.lastIndexOf(op_znak)));
         let po = parseFloat(wart.substr(wart.lastIndexOf(op_znak)+1,wart.length));
         let wyn;
-        switch(op_znak) {
-            case '+':
-                wyn = przed + po;
-                zaw.innerHTML = wyn;
-                break;
-            case '-':
-                wyn = przed - po;
-                zaw.innerHTML = wyn;
-                break;
-            case '*':
-                wyn = przed * po;
-                zaw.innerHTML = wyn;
-                break;
-            case '/':
-                wyn = przed / po;
-                zaw.innerHTML = wyn;
-                break;
+        let gowno = (zaw.innerHTML).charAt((zaw.innerHTML).length - 1);
+        if(gowno != '*' && gowno != '/' && gowno != '+' && gowno != '-') {
+            switch(op_znak) {
+                case '+':
+                    wyn = przed + po;
+                    zaw.innerHTML = wyn;
+                    break;
+                case '-':
+                    wyn = przed - po;
+                    zaw.innerHTML = wyn;
+                    break;
+                case '*':
+                    wyn = przed * po;
+                    zaw.innerHTML = wyn;
+                    break;
+                case '/':
+                    wyn = przed / po;
+                    zaw.innerHTML = wyn;
+                    break;
+            }
+            op = 0;
+            op_znak = 0;
         }
-        op = 0;
-        op_znak = 0;
     } else {
         zaw.innerHTML = zaw.innerHTML + znak;
     }
-    }
+    //}
 }

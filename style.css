@@ -23,9 +23,14 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    max-width: 432px;
 }
 #wynik > div {
     font-size: 2rem;
+    overflow:scroll;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    
 }
 #przyciski {
     margin-top: 10px;
@@ -46,4 +51,20 @@ body {
     transition: 300ms;
     background-color: rgb(17, 14, 37);
     box-shadow: 0px 0px 4px rgb(223, 255, 255);
+}
+
+::-webkit-scrollbar {
+    height: 20px;
+}
+  
+  /* Track */
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+  
+  /* Handle */
+::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 5px;
+    box-shadow: inset 0px 0px 2px rgb(0, 26, 255);
 }

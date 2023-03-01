@@ -2,23 +2,61 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 body {
+    --border-kolor: rgb(0, 61, 192);
+    --bg-kolor: rgb(13, 11, 29);
     margin: 0;
-    background-color: rgb(13, 11, 29);
-    
+    background-color: var(--bg-kolor);
+    transition: 1s;
 }
 #kalk {
     width: fit-content;
     background: transparent;
-    margin: auto;
     border-radius: 10px;
-    box-shadow: 0px 0px 10px aqua;
+    box-shadow: 0px 0px 10px var(--border-kolor);
     padding: 10px;
+    margin: auto;
+    margin-top: 5rem;
+}
+#theme {
+    background-color: white;
+    border-radius: 50%;
+    width: 5rem;
+    height: 5rem;
+    position: fixed;
+    left: 2rem;
+    top: 2rem;
+    z-index: 3;
+    box-shadow: 0px 0px 10px black;
+    padding: 0;
+    cursor: pointer;
+    transition: 300ms;
+}
+#theme:hover {
+    transform: scale(1.04);
+}
+#theme:active {
+    transform: scale(0.96);
+}
+#light, #dark {
+    position: absolute;
+    right: 50%;
+    bottom: 8%;
+    transform: translate(50%);
+    width: 4rem;
+    height: 4rem;
+    transition: 1s;
+}
+#light {
+    opacity: 0;
+}
+#ekran {
+    transition: 300ms;
 }
 #wynik {
     height: 150px;
     background: transparent;
     border-radius: 5px;
-    box-shadow: 0px 0px 4px aqua;
+    box-shadow: 0px 0px 4px var(--border-kolor);
     color: white;
     display: flex;
     justify-content: center;
@@ -39,20 +77,22 @@ body {
     grid-template-rows: 6rem 6rem 6rem 6rem 6rem;
     gap: 1rem;
 }
-#przyciski > input {
+#przyciski > button {
     background: transparent;
     border-radius: 5px;
-    box-shadow: 0px 0px 4px aqua;
+    box-shadow: 0px 0px 6px var(--border-kolor);
     color: white;
     font-size: 1.5rem;
     transition: 300ms;
+    border-color: transparent;
+    cursor: pointer;
 }
-#przyciski > input:hover {
-    transition: 300ms;
-    background-color: rgb(17, 14, 37);
-    box-shadow: 0px 0px 4px rgb(223, 255, 255);
+#przyciski > button:hover {
+    transform: scale(0.98);
 }
-
+#przyciski > button:active {
+    transform: scale(1.02);
+}
 ::-webkit-scrollbar {
     height: 20px;
 }
@@ -66,5 +106,5 @@ body {
 ::-webkit-scrollbar-thumb {
     background: transparent;
     border-radius: 5px;
-    box-shadow: inset 0px 0px 2px rgb(0, 26, 255);
+    box-shadow: inset 0px 0px 2px var(--border-kolor);
 }

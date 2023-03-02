@@ -2,23 +2,26 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 body {
-    --border-kolor: rgb(0, 61, 192);
-    --bg-kolor: rgb(13, 11, 29);
+    --kolor1: rgb(13, 11, 29);
+    --kolor2: rgb(0, 73, 230);
+    --kolor3: rgb(128, 175, 216);
+    --t-bg: white;
+    --t-sh: black;
     margin: 0;
-    background-color: var(--bg-kolor);
+    background-color: var(--kolor1);
     transition: 1s;
 }
 #kalk {
     width: fit-content;
     background: transparent;
     border-radius: 10px;
-    box-shadow: 0px 0px 10px var(--border-kolor);
+    box-shadow: 0px 0px 10px var(--kolor2);
     padding: 10px;
     margin: auto;
-    margin-top: 5rem;
+    margin-top: 9rem;
 }
 #theme {
-    background-color: white;
+    background-color: var(--t-bg);
     border-radius: 50%;
     width: 5rem;
     height: 5rem;
@@ -26,7 +29,7 @@ body {
     left: 2rem;
     top: 2rem;
     z-index: 3;
-    box-shadow: 0px 0px 10px black;
+    box-shadow: 0px 0px 10px var(--t-sh);
     padding: 0;
     cursor: pointer;
     transition: 300ms;
@@ -56,8 +59,8 @@ body {
     height: 150px;
     background: transparent;
     border-radius: 5px;
-    box-shadow: 0px 0px 4px var(--border-kolor);
-    color: white;
+    box-shadow: 0px 0px 4px var(--kolor2);
+    color: var(--kolor3);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -80,8 +83,8 @@ body {
 #przyciski > button {
     background: transparent;
     border-radius: 5px;
-    box-shadow: 0px 0px 6px var(--border-kolor);
-    color: white;
+    box-shadow: 0px 0px 6px var(--kolor2);
+    color: var(--kolor3);
     font-size: 1.5rem;
     transition: 300ms;
     border-color: transparent;

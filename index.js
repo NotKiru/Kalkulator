@@ -1,129 +1,143 @@
 let op = 0;
-let op_znak;
+let op_znak = 0;
 let aha;
 let kolor = "dark";
+let coss = 0;
 function kolory() {
+    let e_body =  document.body;
+    let e_light = document.getElementById("light");
+    let e_dark = document.getElementById("dark");
     if(kolor == "dark") {
         kolor = "light";
-        document.body.style.setProperty("--bg-kolor", "#fdf0f0");
-        document.body.style.setProperty("--border-kolor", "black");
-        document.getElementById("theme").style.setProperty("box-shadow", "0px 0px 10px white");
-        document.getElementById("ekran").style.setProperty("color", "rgb(13, 11, 29)");
-        document.getElementById("light").style.setProperty("opacity", 1);
-        document.getElementById("dark").style.setProperty("opacity", 0);
-        document.getElementById("theme").style.setProperty("background-color", "black");
-        let przy = document.querySelectorAll("button");
-        przy.forEach(element => {
-            element.style.setProperty("color", "rgb(13, 11, 29)");
-        });
+        e_body.style.setProperty("--kolor1", "rgb(150, 180, 243)");
+        e_body.style.setProperty("--kolor2", "rgb(13, 11, 29)");
+        e_body.style.setProperty("--kolor3", "rgb(21, 18, 48)");
+        e_body.style.setProperty("--t-bg", "black");
+        e_body.style.setProperty("--t-sh", "white");
+        e_light.style.setProperty("opacity", 1);
+        e_dark.style.setProperty("opacity", 0);
     } else {
         kolor = "dark";
-        document.body.style.setProperty("--bg-kolor", "rgb(13, 11, 29)");
-        document.body.style.setProperty("--border-kolor", "rgb(0, 61, 192)");
-        document.getElementById("theme").style.setProperty("box-shadow", "0px 0px 10px black");
-        document.getElementById("ekran").style.setProperty("color", "rgb(128, 175, 216)");
-        document.getElementById("light").style.setProperty("opacity", 0);
-        document.getElementById("dark").style.setProperty("opacity", 1);
-        document.getElementById("theme").style.setProperty("background-color", "white");
-        let przy = document.querySelectorAll("button");
-        przy.forEach(element => {
-            element.style.setProperty("color", "rgb(128, 175, 216)");
-        });
+        e_body.style.setProperty("--kolor1", "rgb(13, 11, 29)");
+        e_body.style.setProperty("--kolor2", "rgb(0, 73, 230)");
+        e_body.style.setProperty("--kolor3", "rgb(128, 175, 216)");
+        e_body.style.setProperty("--t-bg", "white");
+        e_body.style.setProperty("--t-sh", "black");
+        e_light.style.setProperty("opacity", 0);
+        e_dark.style.setProperty("opacity", 1);
     }
 }
 function cos(znak) {
-    let zaw = document.getElementById("ekran");
-    //if((zaw.innerHTML).length < 24 || znak == '⇐' || znak == 'C' || znak == 'CE') {
+    let e_ekran = document.getElementById("ekran");
+    let wart = e_ekran.innerHTML;
+    let dlugosc = wart.length;
+    let przed = parseFloat(wart.substr(0,wart.lastIndexOf(op_znak)));
+    let po = parseFloat(wart.substr(wart.lastIndexOf(op_znak)+1,dlugosc));
+    if(coss == 1) {
+        po = parseFloat(wart.substr(wart.indexOf("(")+1,wart.indexOf(")")));
+        coss = 0;
+    }
+    
     if(aha == 1) {
         aha=0;
-        zaw.innerHTML = '';
+        e_ekran.innerHTML = '';
     }
     if(znak == '⇐') {
-        let wart = zaw.innerHTML;
-        zaw.innerHTML = wart.slice(0, -1);
+        if(isZnak(lastChar(wart))) {
+            op = 0;
+            op_znak = 0;
+        }
+        e_ekran.innerHTML = wart.slice(0, -1);
     } else if(znak == 'C' || znak == 'CE') {
-       zaw.innerHTML = ''; 
+        e_ekran.innerHTML = ''; 
        op_znak = 0;
        op = 0;
     } else if(znak == '+/-') {
-        let wart = zaw.innerHTML;
-        zaw.innerHTML = -wart.substr(0, wart.length);
-    } else if(znak == '/' || znak == '*' || znak == '+' || znak == '-') {
-        let wart = zaw.innerHTML;
-        if(wart.length != 0) {
-            if(op == 0 && znak != '=') {
-                op++;
+        if(op_znak == 0) {
+            przed = parseFloat(wart.substr(0,dlugosc));
+            przed = -przed;
+            e_ekran.innerHTML = przed;
+        } else {
+            if(!isNaN(po)) {
+                if(op_znak == "+") op_znak = "-";
+                else if(op_znak == "-") op_znak = "+";
+                else if(op_znak == "*") po = -po;
+                else if(op_znak == "/") po = -po;
+                if((op_znak == "/" || op_znak == "*") && po < 0) {
+                    coss = 1;
+                    e_ekran.innerHTML = przed + op_znak + "(" + po + ")";
+                }
+                else e_ekran.innerHTML = przed + op_znak + po;
+            }
+        }
+        e_ekran = przed + op_znak + po;
+    } else if(isZnak(znak)) {
+            if(op == 0 && znak != '=' && dlugosc != 0) {
+                op=1;
                 op_znak = znak;
-                zaw.innerHTML = zaw.innerHTML + znak;
+                e_ekran.innerHTML = wart + znak;
             } else {
-                let gowno = (zaw.innerHTML).charAt((zaw.innerHTML).length - 1);
-                if(gowno != '*' && gowno != '/' && gowno != '+' && gowno != '-') {
-                    let przed = parseFloat(wart.substr(0,wart.lastIndexOf(op_znak)));
-                    let po = parseFloat(wart.substr(wart.lastIndexOf(op_znak)+1,wart.length));
-                    let wyn;
+                if(isNZnak(lastChar(wart))) {
                     switch(op_znak) {
                         case '+':
-                            wyn = przed + po;
-                            zaw.innerHTML = wyn + znak;
+                            e_ekran.innerHTML = przed + po + znak;
                             break;
                         case '-':
-                            wyn = przed - po;
-                            zaw.innerHTML = wyn + znak;
+                            e_ekran.innerHTML = przed - po + znak;
                             break;
                         case '*':
-                            wyn = przed * po;
-                            zaw.innerHTML = wyn + znak;
+                            e_ekran.innerHTML = przed * po + znak;
                             break;
                         case '/':
                             if(po == 0) {
                                 aha = 1;
-                            zaw.innerHTML = "Nie można dzielić przez Zero";
+                                e_ekran.innerHTML = "Nie można dzielić przez Zero";
                             } else {
-                                wyn = przed / po;
-                                zaw.innerHTML = wyn;
+                                e_ekran.innerHTML = przed / po + znak;
                             }
                             break;
                     }
                 }
-            }
         }
     } else if(znak == '=') {
-        let wart = zaw.innerHTML;
-        let przed = parseFloat(wart.substr(0,wart.lastIndexOf(op_znak)));
-        let po = parseFloat(wart.substr(wart.lastIndexOf(op_znak)+1,wart.length));
-        let wyn;
-        let gowno = (zaw.innerHTML).charAt((zaw.innerHTML).length - 1);
-        if(wart.length != 0) {
-            if(gowno != '*' && gowno != '/' && gowno != '+' && gowno != '-') {
-                switch(op_znak) {
-                    case '+':
-                        wyn = przed + po;
-                        zaw.innerHTML = wyn;
-                        break;
-                    case '-':
-                        wyn = przed - po;
-                        zaw.innerHTML = wyn;
-                        break;
-                    case '*':
-                        wyn = przed * po;
-                        zaw.innerHTML = wyn;
-                        break;
-                    case '/':
-                        if(po == 0) {
-                            aha = 1;
-                            zaw.innerHTML = "Nie można dzielić przez Zero";
-                        } else {
-                            wyn = przed / po;
-                            zaw.innerHTML = wyn;
-                        }
-                        break;
-                }
-                op = 0;
-                op_znak = 0;
-            } 
+        if(isNZnak(lastChar(wart)) && dlugosc != 0) {
+            switch(op_znak) {
+                case '+':
+                    e_ekran.innerHTML = przed + po;
+                    break;
+                case '-':
+                    e_ekran.innerHTML = przed - po;
+                    break;
+                case '*':
+                    e_ekran.innerHTML = przed * po;
+                    break;
+                case '/':
+                    if(po == 0) {
+                        aha = 1;
+                        e_ekran.innerHTML = "Nie można dzielić przez Zero";
+                    } else {
+                        e_ekran.innerHTML = przed / po;
+                    }
+                    break;
+            }
+            op = 0;
+            op_znak = 0;
         } 
     } else {
-        zaw.innerHTML = zaw.innerHTML + znak;
+        e_ekran.innerHTML = wart + znak;
     }
-    //}
+}
+
+function isZnak(value) {
+    if(value == '+' || value == '-' || value == '*' || value == '/') return true;
+    else return false;
+}
+
+function isNZnak(value) {
+    if(value != '+' && value != '-' && value != '*' && value != '/') return true;
+    else return false;
+}
+
+function lastChar(value) {
+    return value.charAt((value).length - 1);
 }

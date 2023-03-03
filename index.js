@@ -1,6 +1,6 @@
 let op = 0;
 let op_znak = 0;
-let aha;
+let aha = 0;
 let kolor = "dark";
 let coss = 0;
 function kolory() {
@@ -29,6 +29,12 @@ function kolory() {
 }
 function cos(znak) {
     let e_ekran = document.getElementById("ekran");
+    if(aha == 1) {
+        e_ekran.innerHTML = '';
+        op = 0;
+        op_znak = 0;
+        aha = 0;
+    } 
     let wart = e_ekran.innerHTML;
     let dlugosc = wart.length;
     let przed = parseFloat(wart.substr(0,wart.lastIndexOf(op_znak)));
@@ -36,13 +42,6 @@ function cos(znak) {
     if(coss == 1) {
         po = parseFloat(wart.substr(wart.indexOf("(")+1,wart.indexOf(")")));
         coss = 0;
-    }
-    
-    if(aha == 1) {
-        aha=0;
-        e_ekran.innerHTML = '';
-        op = 0;
-        op_znak = 0;
     }
     if(znak == '⇐') {
         if(isZnak(lastChar(wart))) {
@@ -128,6 +127,7 @@ function cos(znak) {
     } else {
         e_ekran.innerHTML = wart + znak;
     }
+
 }
 
 function isZnak(value) {

@@ -36,13 +36,13 @@ function cos(znak) {
     if(coss == 1) {
         po = parseFloat(wart.substr(wart.indexOf("(")+1,wart.indexOf(")")));
         coss = 0;
-        op = 0;
-        op_znak = 0;
     }
     
     if(aha == 1) {
         aha=0;
         e_ekran.innerHTML = '';
+        op = 0;
+        op_znak = 0;
     }
     if(znak == '⇐') {
         if(isZnak(lastChar(wart))) {

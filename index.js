@@ -3,6 +3,7 @@ let op_znak = 0;
 let aha = 0;
 let kolor = "dark";
 let coss = 0;
+let kolejne = 0;
 function kolory() {
     let e_body =  document.body;
     let e_light = document.getElementById("light");
@@ -48,28 +49,39 @@ function cos(znak) {
             op = 0;
             op_znak = 0;
         }
+        if(lastChar(wart) == '.') {
+            kolejne = 0;
+       }
         e_ekran.innerHTML = wart.slice(0, -1);
     } else if(znak == 'C' || znak == 'CE') {
         e_ekran.innerHTML = ''; 
        op_znak = 0;
        op = 0;
+       kolejne = 0;
+       
     } else if(znak == '+/-') {
-        if(op_znak == 0) {
-            przed = parseFloat(wart.substr(0,dlugosc));
-            przed = -przed;
-            e_ekran.innerHTML = przed;
-        } else {
-            if(!isNaN(po)) {
-                if(op_znak == "+") op_znak = "-";
-                else if(op_znak == "-") op_znak = "+";
-                else if(op_znak == "*") po = -po;
-                else if(op_znak == "/") po = -po;
-                if((op_znak == "/" || op_znak == "*") && po < 0) {
-                    coss = 1;
-                    e_ekran.innerHTML = przed + op_znak + "(" + po + ")";
-                }
-                else e_ekran.innerHTML = przed + op_znak + po;
+        if(dlugosc != 0) {
+            if(lastChar(wart) == '.') {
+                kolejne = 0;
             }
+            if(op_znak == 0 ) {
+                przed = parseFloat(wart.substr(0,dlugosc));
+                przed = -przed;
+                e_ekran.innerHTML = przed;
+            } else {
+                if(!isNaN(po)) {
+                    if(op_znak == "+") op_znak = "-";
+                    else if(op_znak == "-") op_znak = "+";
+                    else if(op_znak == "*") po = -po;
+                    else if(op_znak == "/") po = -po;
+                    if((op_znak == "/" || op_znak == "*") && po < 0) {
+                        coss = 1;
+                        e_ekran.innerHTML = przed + op_znak + "(" + po + ")";
+                    }
+                    else e_ekran.innerHTML = przed + op_znak + po;
+                }
+            }
+            
         }
         e_ekran = przed + op_znak + po;
     } else if(isZnak(znak)) {
@@ -97,7 +109,9 @@ function cos(znak) {
                                 e_ekran.innerHTML = przed / po + znak;
                             }
                             break;
+                       
                     }
+                    kolejne = 0;
                 }
         }
     } else if(znak == '=') {
@@ -123,8 +137,14 @@ function cos(znak) {
             }
             op = 0;
             op_znak = 0;
+            kolejne = 0;
         } 
-    } else {
+    }else if(znak == '.') {
+        if(dlugosc != 0 && lastChar(wart) != '.' && kolejne == 0 && !isZnak(lastChar(wart)) ) {
+            e_ekran.innerHTML = wart + znak;
+            kolejne = 1;
+        } 
+    }else {
         e_ekran.innerHTML = wart + znak;
     }
 
